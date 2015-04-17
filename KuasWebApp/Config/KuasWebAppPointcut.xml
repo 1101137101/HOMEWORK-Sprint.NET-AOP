@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net"
+         xmlns:aop="http://www.springframework.net/aop">
+
+  <!-- AOP 記錄 Log 的 Advice. -->
+  <object id="debogLogInterceptor" type="KuasCore.Interceptors.DebogLogInterceptor" />
+  <object id="updateEmployeeNameInterceptor" type="KuasCore.Interceptors.UpdateEmployeeNameInterceptor" />
+
+  <!-- 用正規表示是來查詢物件名稱, 指定 AOP 要掛在哪一個物件上 -->
+  <!-- InterceptorNames = AOP Advice, Pattern = 查詢物件名稱的正規表示式. -->
+  <object id="servicePointcut" type="Spring.Aop.Support.SdkRegularExpressionMethodPointcut, Spring.Aop">
+    <property name="Pattern" value="KuasCore.Services.Impl.*Service" />
+  </object>
+
+  <object id="updateEmployeePointcut" type="Spring.Aop.Support.SdkRegularExpressionMethodPointcut, Spring.Aop">
+    <property name="Pattern" value="KuasCore.Services.Impl.EmployeeService.GetEmployeeById" />
+  </object>
+
+  <aop:config>
+    <aop:advisor pointcut-ref="servicePointcut" advice-ref="debogLogInterceptor" />
+    <aop:advisor pointcut-ref="updateEmployeePointcut" advice-ref="updateEmployeeNameInterceptor" />
+  </aop:config>
+
+</objects>
