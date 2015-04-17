@@ -25,7 +25,6 @@ namespace KuasCore.Interceptors
                 result = empoyee;
             }
 
-
             return result;
         }
     }
